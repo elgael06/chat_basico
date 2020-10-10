@@ -27,7 +27,6 @@ const Routes = () => {
             {usuario!==null ?
             <Switch>
                 <Route path='/' component={HomeApp} exact/>
-                <Route path='/registro' component={RegistroApp} exact/>
                 <Route path='/sala/:id' component={SalaApp} exact/>
 
                 <Route path='' component={()=><Redirect to='/' />} />

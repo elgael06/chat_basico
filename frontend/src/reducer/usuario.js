@@ -6,9 +6,13 @@ export default (state=initialUsuario,action) => {
         case "USER_ADD":
             localStorage.setItem('chat_user',action.value);
             return action.value;
-    
+        case "USER_REMOVE":
+            localStorage.removeItem('chat_user');
+            return action.value;
         default:
-            const user = localStorage.getItem('chat_user');
+            const data = localStorage.getItem('chat_user');
+            console.log(data)
+            const user = data !== "null" ? data : null;
             return state || user;
     }
 }
