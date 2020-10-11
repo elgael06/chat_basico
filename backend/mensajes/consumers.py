@@ -1,6 +1,8 @@
 import json
-from asgiref.sync import async_to_sync
+from asgiref.sync import async_to_sync,sync_to_async
 from channels.generic.websocket import WebsocketConsumer,AsyncJsonWebsocketConsumer,AsyncWebsocketConsumer
+
+from .views import create_sala,obtener_salas
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
@@ -52,15 +54,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.room_group_name,
             self.channel_name
         )
-        await self.channel_layer.group_send(
-            self.room_group_name,
-            {
-                'type': 'chat_message',
-                'message': self.message,
-                "usuario":self.user,
-            }
-        )
-    
+
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
         self.message = text_data_json['message']
@@ -92,3 +86,41 @@ class ChatConsumer(AsyncWebsocketConsumer):
             "mensajes":self.mensajes
         }))
 
+class SalasConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
+        print('conecto a salas...')
+        self.room_group_name = 'lista_salas'
+        await self.channel_layer.group_add(
+            self.room_group_name,
+            self.channel_name
+        )
+
+        await self.accept()
+        await self.enviar()
+
+    async def disconnect(self, close_code):
+        await self.channel_layer.group_discard(
+            self.room_group_name,
+            self.channel_name
+        )
+
+    async def receive(self, text_data):
+        text_data_json = json.loads(text_data)
+        name_sala      = text_data_json['sala']
+        usuario        = text_data_json['usuario']
+
+        await sync_to_async(create_sala)(sala=name_sala,usuario=usuario)
+        await self.enviar()
+
+    async def enviar(self):
+        await self.channel_layer.group_send(
+            self.room_group_name,
+            { 'type': 'message_sala',}
+        )
+
+    async def message_sala(self,event):
+        print('mensajes')
+        sala = await sync_to_async(obtener_salas)()
+        await self.send(text_data=json.dumps({
+             "salas" : sala,
+        }))
