@@ -2,7 +2,7 @@ import json
 from asgiref.sync import async_to_sync,sync_to_async
 from channels.generic.websocket import WebsocketConsumer,AsyncJsonWebsocketConsumer,AsyncWebsocketConsumer
 
-from .views import create_sala,obtener_salas
+from .views import create_sala,obtener_salas,crear_mensaje,obtener_mensajes_sala,id_sala
 
 
 class ChatConsumer(AsyncWebsocketConsumer):
@@ -34,7 +34,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 "usuario":self.user,
             }
         )
-
 
     async def disconnect(self, close_code):
         print('disconect...')
@@ -87,6 +86,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         }))
 
 class SalasConsumer(AsyncWebsocketConsumer):
+
     async def connect(self):
         print('conecto a salas...')
         self.room_group_name = 'lista_salas'
@@ -115,7 +115,7 @@ class SalasConsumer(AsyncWebsocketConsumer):
     async def enviar(self):
         await self.channel_layer.group_send(
             self.room_group_name,
-            { 'type': 'message_sala',}
+            { 'type': 'message_sala', }
         )
 
     async def message_sala(self,event):
@@ -123,4 +123,51 @@ class SalasConsumer(AsyncWebsocketConsumer):
         sala = await sync_to_async(obtener_salas)()
         await self.send(text_data=json.dumps({
              "salas" : sala,
+        }))
+
+class SalaIdConsumer(AsyncWebsocketConsumer):
+
+    async def connect(self):
+        print('conecto a salas...')
+        print('sala => ', self.scope['url_route']['kwargs']['sala'])
+        self.room_name = self.scope['url_route']['kwargs']['sala']
+        self.room_group_name = 'sala_id_%s' % self.room_name
+        await self.channel_layer.group_add(
+            self.room_group_name,
+            self.channel_name
+        )
+        await self.accept()
+        await self.enviar(self.room_name)
+
+    async def disconnect(self, close_code):
+        print('desconectado => ', self.room_group_name)
+        await self.channel_layer.group_discard(
+            self.room_group_name,
+            self.channel_name
+        )
+
+    async def receive(self, text_data):
+        print('recivido ',text_data)
+        text_data_json = json.loads(text_data)
+        sala           = text_data_json['sala']
+        usuario        = text_data_json['usuario']
+        mensaje        = text_data_json['mensaje']
+        await sync_to_async(crear_mensaje)(mensaje,usuario,sala)
+        await self.enviar(sala)
+
+    async def enviar(self,id):
+        print('enviar ',id)
+        await self.channel_layer.group_send(
+            self.room_group_name,
+            { 'type': 'mensajes',"id":id }
+        )
+
+    async def mensajes(self,event):
+        id   = event['id']
+        data = await sync_to_async(id_sala)(id)
+        print('mensajes ',id)
+        sala = await sync_to_async(obtener_mensajes_sala)(id)
+        await self.send(text_data=json.dumps({
+             "mensajes" : sala,
+             "sala":data
         }))

@@ -76,6 +76,6 @@ def objet_mensaje(mensaje=Mensajes):
         "text"      : mensaje.text,
         "idSala"    : mensaje.idSala,
         "usuario"   : mensaje.usuario,
-        "date"      : mensaje.date,
+        "date"      : mensaje.date.strftime("%H:%M:%S %d/%m/%Y."),
     }
 
