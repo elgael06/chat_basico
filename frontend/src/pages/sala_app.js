@@ -66,6 +66,7 @@ const SalaApp = () => {
             <hr />
             <form onSubmit={send}>
                 <TextField 
+                    fullWidth
                     color='primary'
                     InputProps={{
                         startAdornment:<InputAdornment position='start'><Send color='primary' /></InputAdornment>
@@ -76,7 +77,6 @@ const SalaApp = () => {
                     value={value}
                     onChange={e=>setValue(e.target.value)}
                 />
-                <Button type='submit' variant='text' color='secondary' >enviar</Button>
             </form>
 
             <List>
