@@ -83,13 +83,15 @@ const SalaApp = () => {
     }
 
     const send = e => {
-        chat.send(JSON.stringify({
-            sala:id,
-            usuario:usuario,
-            mensaje:value
-        }));
-        console.log('enviar',value);
-        setValue('')
+        if(value!==""){
+            chat.send(JSON.stringify({
+                sala:id,
+                usuario:usuario,
+                mensaje:value
+            }));
+            console.log('enviar',value);
+            setValue('')
+        }
         e.preventDefault();
     }
 
@@ -152,7 +154,7 @@ const SalaApp = () => {
                             <Message htmlColor='#00000080' />
                         </InputAdornment>,
                         endAdornment:<InputAdornment position='end'>
-                            <IconButton onClick={send}>
+                            <IconButton disabled={value===""} onClick={send}>
                                 <Send color='primary' />
                             </IconButton>
                         </InputAdornment>

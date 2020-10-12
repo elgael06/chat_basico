@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { crearUsuario } from '../actions';
 import { WS_SALAS } from '../controllers';
-import { AppBar, Badge, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, makeStyles, Toolbar, Typography } from '@material-ui/core';
-import {  ExitToAppRounded, Laptop, People, Send } from '@material-ui/icons';
+import { AppBar, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, makeStyles, Toolbar, Typography } from '@material-ui/core';
+import {  ExitToAppRounded, Laptop, Send } from '@material-ui/icons';
 import CrearSala from '../components/crear_sala';
 import { useHistory} from 'react-router-dom';
 
