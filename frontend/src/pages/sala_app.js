@@ -4,7 +4,7 @@ import { agregarMensajes } from '../actions';
 import { WS_SALAS_ID } from '../controllers';
 import {useHistory, useParams} from 'react-router-dom';
 import { AppBar, Badge, Divider, IconButton, InputAdornment, List, ListItem, ListItemSecondaryAction, ListItemText, makeStyles, TextField, Toolbar, Typography } from '@material-ui/core';
-import { ArrowBack, Chat, People, Person, Send } from '@material-ui/icons';
+import { ArrowBack, Chat, Message, People, Person, Send } from '@material-ui/icons';
 
 const useStyles = makeStyles(theme=>({
     root: {
@@ -29,10 +29,16 @@ const useStyles = makeStyles(theme=>({
         alignSelf: 'flex-end',
       },
       lista:{
-        height:'calc(100% - 200px)',
+        height:'calc(100% - 220px)',
         width:'calc(100% - 5px)',
         marginTop:15,
         overflow:'auto'
+      },
+      form:{
+        padding:5,
+        flexGrow: 1,
+        alignSelf: 'flex-end',
+        width:'calc( 100% - 10px )'
       }
 }));
 
@@ -88,7 +94,7 @@ const SalaApp = () => {
     }
 
     return(
-        <div className={clases.root} style={{}}>
+        <div className={clases.root}>
             <AppBar position='sticky' color='primary'>
                 <Toolbar className={clases.toolbar}>
 
@@ -140,13 +146,19 @@ const SalaApp = () => {
             <form onSubmit={send}>
                 <br/>
                 <TextField 
-                    fullWidth
                     color='primary'
                     InputProps={{
-                        startAdornment:<InputAdornment position='start'><Send color='primary' /></InputAdornment>
+                        startAdornment:<InputAdornment position='start'>
+                            <Message htmlColor='#00000080' />
+                        </InputAdornment>,
+                        endAdornment:<InputAdornment position='end'>
+                            <IconButton onClick={send}>
+                                <Send color='primary' />
+                            </IconButton>
+                        </InputAdornment>
                     }}
+                    className={clases.form}
                     placeholder='mensaje..'
-                    size='small'
                     variant='outlined'
                     value={value}
                     onChange={e=>setValue(e.target.value)}
