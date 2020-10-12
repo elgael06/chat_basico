@@ -1,1 +1,1 @@
-web: daphne config.asgi:application
+web: daphne config.asgi:application -p $PORT
