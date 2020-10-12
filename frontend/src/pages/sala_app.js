@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { agregarMensajes } from '../actions';
 import { WS_SALAS_ID } from '../controllers';
-import {useParams} from 'react-router-dom';
-import { Button, List, ListItem, ListItemText, TextField } from '@material-ui/core';
+import {Link, useParams} from 'react-router-dom';
+import { Button, Divider, InputAdornment, List, ListItem, ListItemText, TextField } from '@material-ui/core';
+import { ArrowBack, Send } from '@material-ui/icons';
 
 
 let chat;
@@ -54,11 +55,21 @@ const SalaApp = () => {
 
     return(
         <div>
+
+            <Link to='/'>
+                <Button variant='text' color='primary'  startIcon={<ArrowBack />}>
+                    salir
+                </Button>
+            </Link>
             <h3>sala : {serie.nombre}</h3>
             <b>Creada: {serie.fecha + ' por :' + serie.creador}</b>
             <hr />
             <form onSubmit={send}>
                 <TextField 
+                    color='primary'
+                    InputProps={{
+                        startAdornment:<InputAdornment position='start'><Send color='primary' /></InputAdornment>
+                    }}
                     label='nuevo mensaje'
                     size='small'
                     variant='outlined'
@@ -71,12 +82,15 @@ const SalaApp = () => {
             <List>
                 {
                     mensajes.map(msj=>{
-                        return<ListItem key={msj.pk}>
+                        return<>
+                        <ListItem key={msj.pk}>
                             <ListItemText 
                                 primary={msj.text}
                                 secondary={`${msj.usuario} - ${msj.date} ` }
                             />
                         </ListItem>
+                        <Divider />
+                        </>
                     })
                 }
             </List>

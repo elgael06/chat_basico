@@ -76,7 +76,12 @@ const HomeApp = () => {
 
     return(
         <div>
+            <IconButton onClick={salir}>
+                <ExitToAppRounded />
+            </IconButton>
             <div>
+               <b>Salas</b>
+               <hr />
                <CrearSala
                 event={enviarSala}
                />
@@ -99,9 +104,6 @@ const HomeApp = () => {
                 }
                 </List>
             </div>
-            <IconButton onClick={salir}>
-                <ExitToAppRounded />
-            </IconButton>
             <h3>Home</h3>
             
              <h4>{usuario}</h4>
