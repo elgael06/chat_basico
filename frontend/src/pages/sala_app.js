@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { agregarMensajes } from '../actions';
 import { WS_SALAS_ID } from '../controllers';
 import {Link, useParams} from 'react-router-dom';
-import { Button, Divider, InputAdornment, List, ListItem, ListItemText, TextField } from '@material-ui/core';
-import { ArrowBack, Send } from '@material-ui/icons';
+import { Button, Divider, InputAdornment, List, ListItem, ListItemSecondaryAction, ListItemText, TextField } from '@material-ui/core';
+import { ArrowBack, People, Send } from '@material-ui/icons';
 
 
 let chat;
@@ -54,17 +54,43 @@ const SalaApp = () => {
     }
 
     return(
-        <div>
+        <div style={{height:'90%',width:'calc(100% - 40px)',position:'absolute'}}>
 
             <Link to='/'>
                 <Button variant='text' color='primary'  startIcon={<ArrowBack />}>
-                    salir
+                    salir {usuario}
                 </Button>
             </Link>
             <h3>sala : {serie.nombre}</h3>
             <b>Creada: {serie.fecha + ' por :' + serie.creador}</b>
             <hr />
+
+            <List style={{
+                height:'calc(100% - 200px)',
+                width:'calc(100% - 5px)',
+                marginTop:20,
+                overflow:'auto'
+            }}>
+                {
+                    mensajes.map(msj=>{
+                        return<>
+                        <ListItem key={msj.pk}>
+                            <ListItemText 
+                                primary={msj.text}
+                                secondary={`${msj.usuario} - ${msj.date} ` }
+                            />
+                        </ListItem>
+                            <ListItemSecondaryAction>
+                                {usuario === msj.usuario && <People />}
+                            </ListItemSecondaryAction>
+                        <Divider />
+                        </>
+                    })
+                }
+            </List>
+            <hr />
             <form onSubmit={send}>
+                <br/>
                 <TextField 
                     fullWidth
                     color='primary'
@@ -78,22 +104,6 @@ const SalaApp = () => {
                     onChange={e=>setValue(e.target.value)}
                 />
             </form>
-
-            <List>
-                {
-                    mensajes.map(msj=>{
-                        return<>
-                        <ListItem key={msj.pk}>
-                            <ListItemText 
-                                primary={msj.text}
-                                secondary={`${msj.usuario} - ${msj.date} ` }
-                            />
-                        </ListItem>
-                        <Divider />
-                        </>
-                    })
-                }
-            </List>
         </div>
     )
 }
