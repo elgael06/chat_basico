@@ -1,5 +1,15 @@
 import React, { useState } from 'react';
-import { Button, TextField } from '@material-ui/core';
+import { Button, makeStyles, TextField } from '@material-ui/core';
+
+const useStyles = makeStyles(theme => ({
+    form:{
+        display:'flex',
+    },
+    input:{
+    flexGrow:1,
+    alignSelf:'strech'
+    }
+}));
 
 const CrearSala = ({
     event=e=>e
@@ -11,16 +21,19 @@ const CrearSala = ({
         event(value);
         setValue('');
     }
+
+    const clases = useStyles();
    
-   return(<form onSubmit={enviar}>
+   return(<form onSubmit={enviar} className={clases.form}>
     <TextField 
+        className={clases.input}
         value={value}
         onChange={e=>setValue(e.target.value)}
         label='Nueva sala'
         size='small'
         variant='outlined' 
     />
-    <Button onClick={enviar} disabled={!value}>
+    <Button onClick={enviar} disabled={!value} variant='text' color='secondary'>
         crear
     </Button>
 </form>);
