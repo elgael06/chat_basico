@@ -40,7 +40,7 @@
   },
   "proxy":"http://localhost:8000/",
   "ws":{
-    "dev":"ws://localhost:8000",
-    "prod":"wss://chatbasico06.herokuapp.com"
+    "dev":"://localhost:8000",
+    "prod":"://chatbasico06.herokuapp.com"
   }
 }
