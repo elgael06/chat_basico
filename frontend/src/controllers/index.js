@@ -2,7 +2,8 @@
 import {ws} from '../../package.json';
 
 console.log("entorno front ", process.env.NODE_ENV)
-export const IP_WS  = process.env.NODE_ENV ? ws.dev : ws.prod;
+export const IP_WS  = process.env.NODE_ENV==='development' ? ws.dev : ws.prod;
+console.log('ip ',IP_WS);
 // chat
 export const WS_CHAT = () => new WebSocket(`${IP_WS}/ws/chat/`);
 export const WS_CHAT_ROOM = (room,user) => new WebSocket(`${IP_WS}/ws/chat/${room}/${user}/`);
