@@ -1,1 +1,1 @@
-web: daphne myproject.asgi:application
+web: daphne config.asgi:application
