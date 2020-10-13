@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { agregarMensajes } from '../actions';
+import { agregarMensajes, offLoading, onLoading } from '../actions';
 import { WS_SALAS_ID } from '../controllers';
 import {useHistory, useParams} from 'react-router-dom';
 import { AppBar, Badge, Divider, IconButton, InputAdornment, List, ListItem, ListItemSecondaryAction, ListItemText, makeStyles, TextField, Toolbar, Typography } from '@material-ui/core';
@@ -57,7 +57,8 @@ const SalaApp = () => {
     useEffect(()=>initApp(),[]);
 
     const initApp = () => {
-        console.log('sala ',id)
+        console.log('sala ',id);
+        dispatch(onLoading());
         iniciarRoom();
         return ()=>{
             chat.close();
@@ -77,6 +78,7 @@ const SalaApp = () => {
             dispatch(agregarMensajes([...mensajes]));
             const objDiv = document.querySelector(".msg-container");
             objDiv.scrollTop = objDiv.scrollHeight;
+            dispatch(offLoading());
         };
         chat.onclose = () => console.log('cerrar conexion...');
         chat.onerror = err => console.log('error...',err);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { crearUsuario } from '../actions';
+import { crearUsuario, offLoading, onLoading } from '../actions';
 import { WS_SALAS } from '../controllers';
 import { AppBar, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, makeStyles, Toolbar, Typography } from '@material-ui/core';
 import {  ExitToAppRounded, Laptop, Send } from '@material-ui/icons';
@@ -52,6 +52,7 @@ const HomeApp = () => {
     useEffect(()=>initApp(),[]);
 
     const initApp = () => {
+        dispatch(onLoading());
         iniciarSalas();
         return ()=>{
             salas.close();
@@ -67,6 +68,7 @@ const HomeApp = () => {
             const datos = JSON.parse( e.data);
             console.log(datos);
             setSalas(datos.salas);
+            dispatch(offLoading())
         };
         salas.onclose = () => console.log('cerrar conexion...');
         salas.onerror = err => console.log('error...',err);

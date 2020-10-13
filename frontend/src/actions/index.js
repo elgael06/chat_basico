@@ -17,3 +17,11 @@ export const crearUsuario = value => {
         })
     }
 }
+
+export const onLoading = () => {
+    return dispatch=> dispatch({type:"UI_LOADING_ON"});
+}
+
+export const offLoading = () => {
+    return dispatch=> setTimeout(()=> dispatch({type:"UI_LOADING_OFF"}),500);
+}
