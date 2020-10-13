@@ -30,15 +30,10 @@
 ## Capturas de pantalla 
 
 <div style={{dispay:'inline-block',margin:'auto'}}>
-
-<img src='./capturas_pantalla/Screenshot_2020-10-13-13-15-08-046_com.android.chrome.jpg' width='100px'  style={{dispay:'inline-block',margin:'5px'}} />
-
-<img src='./capturas_pantalla/Screenshot_2020-10-13-13-15-16-218_com.android.chrome.jpg' width='100px'  style={{dispay:'inline-block',margin:'5px'}} />
-
-<img src='./capturas_pantalla/Screenshot_2020-10-13-13-15-21-308_com.android.chrome.jpg' width='100px' style={{dispay:'inline-block',margin:'5px'}}  />
-
-<img src='./capturas_pantalla/Screenshot_2020-10-13-13-15-28-225_com.android.chrome.jpg' width='100px' style={{dispay:'inline-block',margin:'5px'}} />
-
+    <img src='./capturas_pantalla/Screenshot_2020-10-13-13-15-08-046_com.android.chrome.jpg' width='100px'  style={{dispay:'inline-block',margin:'5px'}} />
+    <img src='./capturas_pantalla/Screenshot_2020-10-13-13-15-16-218_com.android.chrome.jpg' width='100px'  style={{dispay:'inline-block',margin:'5px'}} />
+    <img src='./capturas_pantalla/Screenshot_2020-10-13-13-15-21-308_com.android.chrome.jpg' width='100px' style={{dispay:'inline-block',margin:'5px'}}  />
+    <img src='./capturas_pantalla/Screenshot_2020-10-13-13-15-28-225_com.android.chrome.jpg' width='100px' style={{dispay:'inline-block',margin:'5px'}} />
 </div>
 
 ## [ver muestra de aplicacion ](https://chatbasico06.herokuapp.com/)
