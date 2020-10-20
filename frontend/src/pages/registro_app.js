@@ -1,7 +1,7 @@
 import { AppBar, Button, makeStyles, TextField, Tooltip, Typography } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { crearUsuario } from '../actions';
+import { crearUsuario, offLoading } from '../actions';
 
 const estyles = makeStyles(theme=>({
     root: {
@@ -44,6 +44,12 @@ const RegistroApp = () => {
     const [value,setValue] = useState('');
     const dispatch = useDispatch();
     const clases = estyles();
+
+    useEffect(()=>initialApp(),[]);
+
+    const initialApp = () =>{
+        dispatch(offLoading())
+    }
 
     const agregar = e => {
         dispatch(crearUsuario(value));
